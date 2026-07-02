@@ -1,0 +1,4 @@
+#serial communication
+SERIAL_PORT="COM3"
+BAUD_RATE=115200
+SERIAL_TIMEOUT=1
