@@ -8,18 +8,18 @@ class AQIEngine:
     def find_breakpoint(self,pollutant,concentration):
         standard=self.standard_manager.get_active_standard()
 
-        print("Standard:", standard.id)
-        print("Pollutant:", pollutant)
-        print("Concentration:", concentration)
+        #print("Standard:", standard.id)
+        #print("Pollutant:", pollutant)
+        #print("Concentration:", concentration)
 
         breakpoints=self.breakpoint_manager.get_breakpoints(pollutant,standard.id)
-        print("Number of BreakpointsL ",len(breakpoints))
+        #print("Number of Breakpoints: ",len(breakpoints))
         for bp in breakpoints:
-            print(bp.conc_low, bp.conc_high)
+            #print(bp.conc_low, bp.conc_high)
             if bp.conc_low<= concentration <= bp.conc_high:
-                print("Match Found")
+                #print("Match Found")
                 return bp
-        print("No match")
+        #print("No match")
         return None
         
         
