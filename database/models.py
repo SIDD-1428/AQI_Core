@@ -6,7 +6,7 @@ from sqlalchemy import Boolean
 
 from database.engine import Base
 
-class EnvironmentalData(Base):
+class Packet(Base):
     __tablename__="packets"
 
     #pk

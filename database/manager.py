@@ -1,5 +1,5 @@
 from database.engine import SessionLocal
-from database.models import EnvironmentalData
+from database.models import Packet
 from database.repository import EnvironmentalRepository
 
 class DatabaseManager:
@@ -8,7 +8,7 @@ class DatabaseManager:
         self.repositiory=EnvironmentalRepository(self.session)
 
     def save_packet(self,packet):
-        data=EnvironmentalData(
+        data=Packet(
             version=packet.version,
             node=packet.node,
             sequence=packet.sequence,
@@ -30,7 +30,8 @@ class DatabaseManager:
             timestamp=packet.timestamp
         )
 
-        self.repositiory.save(data)
+        return self.repositiory.save(data)
+        return data
     
     def get_latest_packet(self):
         return self.repositiory.get_latest()

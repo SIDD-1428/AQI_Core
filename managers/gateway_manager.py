@@ -6,6 +6,8 @@ from database.engine import SessionLocal
 from configuration.breakpoint_manager import BreakpointManager
 from configuration.standard_manager import StandardManager
 from aqi.engine import AQIEngine
+from database.aqi_result_models import AQIResultModel
+from database.aqi_result_manager import AQIResultManager
 
 class GatewayManager:
     def __init__(self):
@@ -14,6 +16,7 @@ class GatewayManager:
         self.session=SessionLocal()
         self.breakpoint_manager=BreakpointManager(self.session)
         self.standard_manager=StandardManager(self.session)
+        self.aqi_result_manager=AQIResultManager(self.session)
 
         self.aqi_engine=AQIEngine(
             self.breakpoint_manager,
@@ -39,7 +42,24 @@ class GatewayManager:
     def handle_packet(self, packet, aqi_result):
         print("--------------------------------")        
         try:
-            self.database.save_packet(packet)
+            saved_packet=self.database.save_packet(packet)
+            aqi_record=AQIResultModel(
+                packet_id=saved_packet.id,
+                node=packet.node,
+
+                aqi=aqi_result.aqi,
+                category=aqi_result.category,
+                dominant_pollutant=aqi_result.dominant_pollutant,
+
+                pm2_5_index=aqi_result.subindices["PM2_5"],
+                pm10_index=aqi_result.subindices["PM10"],
+                no2_index=aqi_result.subindices["NO2"],
+                so2_index=aqi_result.subindices["SO2"],
+                co_index=aqi_result.subindices["CO"],
+                o3_index=aqi_result.subindices["O3"],
+                nh3_index=aqi_result.subindices["NH3"],
+            )
+            self.aqi_result_manager.save_result(aqi_record)
         except Exception as e:
             print(f"Database Error: {e}")
             return
