@@ -7,8 +7,13 @@ from aqi.engine import AQIEngine
 
 
 class FakePacket:
-
-    pm2_5 = 45
+    pm2_5 = 74
+    pm10 = 120
+    no2 = 30
+    so2 = 18
+    co = 1.4
+    o3 = 65
+    nh3 = 70
 
 
 session = SessionLocal()
@@ -25,6 +30,19 @@ print(standard)
 print(standard.id)
 result = engine.calculate(FakePacket())
 
-print(result)
+print()
+print("=" * 40)
+print("FINAL AQI RESULT")
+print("=" * 40)
+print(f"AQI                 : {result.aqi}")
+print(f"Category            : {result.category}")
+print(f"Color               : {result.color}")
+print(f"Dominant Pollutant  : {result.dominant_pollutant}")
+
+print("\nSub-indices")
+print("-" * 40)
+
+for pollutant, value in result.subindices.items():
+    print(f"{pollutant:<8} : {value}")
 
 session.close()

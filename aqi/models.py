@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Dict
 
 @dataclass
 class AQIResult:
@@ -6,3 +7,4 @@ class AQIResult:
     category:str
     color:str
     dominant_pollutant:str
+    subindices: Dict[str,int]

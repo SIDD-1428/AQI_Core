@@ -34,15 +34,39 @@ class AQIEngine:
             )
     
     def calculate(self,packet):
-        breakpoint=self.find_breakpoint("PM2_5",packet.pm2_5)
-        
-        if breakpoint is None:
-            return None
-        
-        aqi=round(self.calculate_subindex(packet.pm2_5,breakpoint))
+        pollutants={
+            "PM2_5":packet.pm2_5,
+            "PM10":packet.pm10,
+            "NO2":packet.no2,
+            "SO2":packet.so2,
+            "CO":packet.co,
+            "O3":packet.o3,
+            "NH3":packet.nh3
+        }
+        subindices={}
+        for pollutant, concentration in pollutants.items():
+            breakpoint=self.find_breakpoint(pollutant,concentration)
+            if breakpoint is None:
+                continue
+
+            subindex=round(
+                self.calculate_subindex(concentration,breakpoint)
+            )
+
+            subindices[pollutant]={
+                "aqi":subindex,
+                "breakpoint":breakpoint
+            }
+        dominant_pollutant=max(subindices, key=lambda pollutant:subindices[pollutant]["aqi"])
+        dominant=subindices[dominant_pollutant]
+
         return AQIResult(
-            aqi=aqi,
-            category=breakpoint.category,
-            color=breakpoint.color,
-            dominant_pollutant="PM2.5"
+            aqi=dominant["aqi"],
+            category=dominant["breakpoint"].category,
+            color=dominant["breakpoint"].color,
+            dominant_pollutant=dominant_pollutant,
+            subindices={
+                pollutant: data["aqi"]
+                for pollutant, data in subindices.items()
+            }
         )

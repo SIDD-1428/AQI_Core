@@ -62,11 +62,341 @@
             "health_message":"Health effects may be experienced even by healthy people."
         }
     ],
-        "PM10":[],
-        "NO2":[],
-        "SO2":[],
-        "CO":[],
-        "O3":[],
-        "NH3":[]
+        "PM10": [
+            {
+                "aqi_low": 0,
+                "aqi_high": 50,
+                "conc_low": 0,
+                "conc_high": 50,
+                "category": "Good",
+                "color": "#00E400",
+                "health_message": "Air quality is satisfactory and poses little or no risk."
+            },
+            {
+                "aqi_low": 51,
+                "aqi_high": 100,
+                "conc_low": 51,
+                "conc_high": 100,
+                "category": "Satisfactory",
+                "color": "#92D050",
+                "health_message": "Minor breathing discomfort may occur in sensitive people."
+            },
+            {
+                "aqi_low": 101,
+                "aqi_high": 200,
+                "conc_low": 101,
+                "conc_high": 250,
+                "category": "Moderate",
+                "color": "#FFFF00",
+                "health_message": "Breathing discomfort to people with lung disease, children and older adults."
+            },
+            {
+                "aqi_low": 201,
+                "aqi_high": 300,
+                "conc_low": 251,
+                "conc_high": 350,
+                "category": "Poor",
+                "color": "#FF7E00",
+                "health_message": "Breathing discomfort to most people on prolonged exposure."
+            },
+            {
+                "aqi_low": 301,
+                "aqi_high": 400,
+                "conc_low": 351,
+                "conc_high": 430,
+                "category": "Very Poor",
+                "color": "#FF0000",
+                "health_message": "Respiratory illness may occur on prolonged exposure."
+            },
+            {
+                "aqi_low": 401,
+                "aqi_high": 500,
+                "conc_low": 431,
+                "conc_high": 600,
+                "category": "Severe",
+                "color": "#8F3F97",
+                "health_message": "Health effects may be experienced even by healthy people."
+            }
+    ],
+        "NO2": [
+        {
+            "aqi_low": 0,
+            "aqi_high": 50,
+            "conc_low": 0,
+            "conc_high": 40,
+            "category": "Good",
+            "color": "#00E400",
+            "health_message": "Air quality is satisfactory and poses little or no risk."
+        },
+        {
+            "aqi_low": 51,
+            "aqi_high": 100,
+            "conc_low": 41,
+            "conc_high": 80,
+            "category": "Satisfactory",
+            "color": "#92D050",
+            "health_message": "Minor breathing discomfort may occur in sensitive people."
+        },
+        {
+            "aqi_low": 101,
+            "aqi_high": 200,
+            "conc_low": 81,
+            "conc_high": 180,
+            "category": "Moderate",
+            "color": "#FFFF00",
+            "health_message": "Breathing discomfort to people with lung disease, children and older adults."
+        },
+        {
+            "aqi_low": 201,
+            "aqi_high": 300,
+            "conc_low": 181,
+            "conc_high": 280,
+            "category": "Poor",
+            "color": "#FF7E00",
+            "health_message": "Breathing discomfort to most people on prolonged exposure."
+        },
+        {
+            "aqi_low": 301,
+            "aqi_high": 400,
+            "conc_low": 281,
+            "conc_high": 400,
+            "category": "Very Poor",
+            "color": "#FF0000",
+            "health_message": "Respiratory illness may occur on prolonged exposure."
+        },
+        {
+            "aqi_low": 401,
+            "aqi_high": 500,
+            "conc_low": 401,
+            "conc_high": 600,
+            "category": "Severe",
+            "color": "#8F3F97",
+            "health_message": "Health effects may be experienced even by healthy people."
+        }
+    ],
+       "SO2": [
+        {
+            "aqi_low": 0,
+            "aqi_high": 50,
+            "conc_low": 0,
+            "conc_high": 40,
+            "category": "Good",
+            "color": "#00E400",
+            "health_message": "Air quality is satisfactory and poses little or no risk."
+        },
+        {
+            "aqi_low": 51,
+            "aqi_high": 100,
+            "conc_low": 41,
+            "conc_high": 80,
+            "category": "Satisfactory",
+            "color": "#92D050",
+            "health_message": "Minor breathing discomfort may occur in sensitive people."
+        },
+        {
+            "aqi_low": 101,
+            "aqi_high": 200,
+            "conc_low": 81,
+            "conc_high": 380,
+            "category": "Moderate",
+            "color": "#FFFF00",
+            "health_message": "Breathing discomfort to people with lung disease, children and older adults."
+        },
+        {
+            "aqi_low": 201,
+            "aqi_high": 300,
+            "conc_low": 381,
+            "conc_high": 800,
+            "category": "Poor",
+            "color": "#FF7E00",
+            "health_message": "Breathing discomfort to most people on prolonged exposure."
+        },
+        {
+            "aqi_low": 301,
+            "aqi_high": 400,
+            "conc_low": 801,
+            "conc_high": 1600,
+            "category": "Very Poor",
+            "color": "#FF0000",
+            "health_message": "Respiratory illness may occur on prolonged exposure."
+        },
+        {
+            "aqi_low": 401,
+            "aqi_high": 500,
+            "conc_low": 1601,
+            "conc_high": 2500,
+            "category": "Severe",
+            "color": "#8F3F97",
+            "health_message": "Health effects may be experienced even by healthy people."
+        }
+    ],
+            "CO": [
+        {
+            "aqi_low": 0,
+            "aqi_high": 50,
+            "conc_low": 0,
+            "conc_high": 1.0,
+            "category": "Good",
+            "color": "#00E400",
+            "health_message": "Air quality is satisfactory and poses little or no risk."
+        },
+        {
+            "aqi_low": 51,
+            "aqi_high": 100,
+            "conc_low": 1.1,
+            "conc_high": 2.0,
+            "category": "Satisfactory",
+            "color": "#92D050",
+            "health_message": "Minor breathing discomfort may occur in sensitive people."
+        },
+        {
+            "aqi_low": 101,
+            "aqi_high": 200,
+            "conc_low": 2.1,
+            "conc_high": 10.0,
+            "category": "Moderate",
+            "color": "#FFFF00",
+            "health_message": "Breathing discomfort to people with lung disease, children and older adults."
+        },
+        {
+            "aqi_low": 201,
+            "aqi_high": 300,
+            "conc_low": 10.1,
+            "conc_high": 17.0,
+            "category": "Poor",
+            "color": "#FF7E00",
+            "health_message": "Breathing discomfort to most people on prolonged exposure."
+        },
+        {
+            "aqi_low": 301,
+            "aqi_high": 400,
+            "conc_low": 17.1,
+            "conc_high": 34.0,
+            "category": "Very Poor",
+            "color": "#FF0000",
+            "health_message": "Respiratory illness may occur on prolonged exposure."
+        },
+        {
+            "aqi_low": 401,
+            "aqi_high": 500,
+            "conc_low": 34.1,
+            "conc_high": 50.0,
+            "category": "Severe",
+            "color": "#8F3F97",
+            "health_message": "Health effects may be experienced even by healthy people."
+        }
+    ],
+        "O3": [
+        {
+            "aqi_low": 0,
+            "aqi_high": 50,
+            "conc_low": 0,
+            "conc_high": 50,
+            "category": "Good",
+            "color": "#00E400",
+            "health_message": "Air quality is satisfactory and poses little or no risk."
+        },
+        {
+            "aqi_low": 51,
+            "aqi_high": 100,
+            "conc_low": 51,
+            "conc_high": 100,
+            "category": "Satisfactory",
+            "color": "#92D050",
+            "health_message": "Minor breathing discomfort may occur in sensitive people."
+        },
+        {
+            "aqi_low": 101,
+            "aqi_high": 200,
+            "conc_low": 101,
+            "conc_high": 168,
+            "category": "Moderate",
+            "color": "#FFFF00",
+            "health_message": "Breathing discomfort to people with lung disease, children and older adults."
+        },
+        {
+            "aqi_low": 201,
+            "aqi_high": 300,
+            "conc_low": 169,
+            "conc_high": 208,
+            "category": "Poor",
+            "color": "#FF7E00",
+            "health_message": "Breathing discomfort to most people on prolonged exposure."
+        },
+        {
+            "aqi_low": 301,
+            "aqi_high": 400,
+            "conc_low": 209,
+            "conc_high": 748,
+            "category": "Very Poor",
+            "color": "#FF0000",
+            "health_message": "Respiratory illness may occur on prolonged exposure."
+        },
+        {
+            "aqi_low": 401,
+            "aqi_high": 500,
+            "conc_low": 749,
+            "conc_high": 1000,
+            "category": "Severe",
+            "color": "#8F3F97",
+            "health_message": "Health effects may be experienced even by healthy people."
+        }
+    ],
+        "NH3": [
+        {
+            "aqi_low": 0,
+            "aqi_high": 50,
+            "conc_low": 0,
+            "conc_high": 200,
+            "category": "Good",
+            "color": "#00E400",
+            "health_message": "Air quality is satisfactory and poses little or no risk."
+        },
+        {
+            "aqi_low": 51,
+            "aqi_high": 100,
+            "conc_low": 201,
+            "conc_high": 400,
+            "category": "Satisfactory",
+            "color": "#92D050",
+            "health_message": "Minor breathing discomfort may occur in sensitive people."
+        },
+        {
+            "aqi_low": 101,
+            "aqi_high": 200,
+            "conc_low": 401,
+            "conc_high": 800,
+            "category": "Moderate",
+            "color": "#FFFF00",
+            "health_message": "Breathing discomfort to people with lung disease, children and older adults."
+        },
+        {
+            "aqi_low": 201,
+            "aqi_high": 300,
+            "conc_low": 801,
+            "conc_high": 1200,
+            "category": "Poor",
+            "color": "#FF7E00",
+            "health_message": "Breathing discomfort to most people on prolonged exposure."
+        },
+        {
+            "aqi_low": 301,
+            "aqi_high": 400,
+            "conc_low": 1201,
+            "conc_high": 1800,
+            "category": "Very Poor",
+            "color": "#FF0000",
+            "health_message": "Respiratory illness may occur on prolonged exposure."
+        },
+        {
+            "aqi_low": 401,
+            "aqi_high": 500,
+            "conc_low": 1801,
+            "conc_high": 2500,
+            "category": "Severe",
+            "color": "#8F3F97",
+            "health_message": "Health effects may be experienced even by healthy people."
+        }
+    ]
     }
 }

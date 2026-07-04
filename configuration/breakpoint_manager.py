@@ -9,3 +9,10 @@ class BreakpointManager:
         
     def get_breakpoints(self,pollutant,standard_id):
         return self.repository.get_breakpoints(pollutant, standard_id)
+    
+    def breakpoint_exists(self,pollutant,standard_id,aqi_low,aqi_high):
+        return(
+            self.repository.exists(
+                pollutant, standard_id, aqi_low, aqi_high
+            )
+        )
