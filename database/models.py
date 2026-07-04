@@ -7,7 +7,7 @@ from sqlalchemy import Boolean
 from database.engine import Base
 
 class EnvironmentalData(Base):
-    __tablename__="environmental_data"
+    __tablename__="packets"
 
     #pk
     id=Column(Integer,primary_key=True, index=True)
