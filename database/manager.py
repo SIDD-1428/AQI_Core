@@ -1,10 +1,12 @@
 from database.engine import SessionLocal
 from database.models import EnvironmentalData
+from database.repository import EnvironmentalRepository
 
 class DatabaseManager:
     def __init__(self):
         self.session=SessionLocal()
-    
+        self.repositiory=EnvironmentalRepository(self.session)
+
     def save_packet(self,packet):
         data=EnvironmentalData(
             version=packet.version,
@@ -28,8 +30,10 @@ class DatabaseManager:
             timestamp=packet.timestamp
         )
 
-        self.session.add(data)
-        self.session.commit()
+        self.repositiory.save(data)
+    
+    def get_latest_packet(self):
+        return self.repositiory.get_latest()
     
     def close(self):
         self.session.close()

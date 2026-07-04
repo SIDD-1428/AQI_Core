@@ -1,8 +1,11 @@
 from database.engine import Base
 from database.engine import engine
 
-import database.models
 
+import database.models
+import configuration.models
+import configuration.breakpoint_models
+import configuration.standard_models
 def initialize_database():
     Base.metadata.create_all(bind=engine)
     print("Database initialized successfully")

@@ -1,0 +1,72 @@
+{
+    "metadata":{
+        "name":"CPCB",
+        "version":"2024",
+        "country":"India"
+    },
+
+    "pollutants":{
+        "PM2_5":[
+        {
+            "aqi_low":0,
+            "aqi_high":50,
+            "conc_low":0,
+            "conc_high":30,
+            "category":"Good",
+            "color":"#00E400",
+            "health_message":"Air quality is satisfactory and poses little to no risk"
+        },
+        {
+            "aqi_low":51,
+            "aqi_high":100,
+            "conc_low":31,
+            "conc_high":60,
+            "category":"Satisfactory",
+            "color":"#92D050",
+            "health_message":"Minor breathing discomfort may occur in sensitive people"
+        },
+        {
+            "aqi_low":101,
+            "aqi_high":200,
+            "conc_low":61,
+            "conc_high":90,
+            "category":"Moderate",
+            "color":"#FFFF00",
+            "health_message":"Breathing discomfort to people with lung disease, children and older adults."
+        },
+        {
+            "aqi_low":201,
+            "aqi_high":300,
+            "conc_low":91,
+            "conc_high":120,
+            "category":"Poor",
+            "color":"#FF7E00",
+            "health_message":"Breathing discomfort to most people on  prolonged exposure."
+        },
+        {
+            "aqi_low":301,
+            "aqi_high":400,
+            "conc_low":121,
+            "conc_high":250,
+            "category":"Very Poor",
+            "color":"#FF0000",
+            "health_message":"Respiratory illness may occur on prolonged exposure."
+        },
+        {
+            "aqi_low":401,
+            "aqi_high":500,
+            "conc_low":251,
+            "conc_high":500,
+            "category":"Severe",
+            "color":"#8F3F97",
+            "health_message":"Health effects may be experienced even by healthy people."
+        }
+    ],
+        "PM10":[],
+        "NO2":[],
+        "SO2":[],
+        "CO":[],
+        "O3":[],
+        "NH3":[]
+    }
+}
