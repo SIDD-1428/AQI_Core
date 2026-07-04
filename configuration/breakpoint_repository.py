@@ -8,7 +8,7 @@ class BreakpointRepository:
         self.session.add(breakpoint)
         self.session.commit()
     
-    def get_breakpoints(self, pollutant, standard):
+    def get_breakpoints(self, pollutant, standard_id):
         return(
-            self.session.query(AQIBreakpoint).filter_by(pollutant=pollutant, standard=standard).order_by(AQIBreakpoint.conc_low).all()
+            self.session.query(AQIBreakpoint).filter_by(pollutant=pollutant, standard_id=standard_id).order_by(AQIBreakpoint.conc_low).all()
         )
