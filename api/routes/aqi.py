@@ -29,3 +29,31 @@ def latest_aqi():
     
     finally:
         service.close()
+
+
+@router.get("/aqi/history")
+def aqi_history(limit: int=50):
+    service=AQIService()
+
+    try:
+        results=service.get_history(limit)
+        history=[]
+        for result in results:
+            history.append({
+                "aqi":result.aqi,
+                "category":result.category,
+                "dominant_pollutant":result.dominant_pollutant,
+                "created_at":result.created_at,
+                "subindices":{
+                    "PM2_5":result.pm2_5_index,
+                    "PM10":result.pm10_index,
+                    "NO2":result.no2_index,
+                    "SO2":result.so2_index,
+                    "CO":result.co_index,
+                    "O3":result.o3_index,
+                    "NH3":result.nh3_index,
+                }
+            })
+        return history
+    finally:
+        service.close()

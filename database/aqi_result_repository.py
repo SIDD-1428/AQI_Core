@@ -6,7 +6,7 @@ class AQIResultRepository:
     def save(self,result):
         self.session.add(result)
         self.session.commit()
-        self.session.refersh(result)
+        self.session.refresh(result)
         return result
     
     def latest(self):
@@ -16,9 +16,10 @@ class AQIResultRepository:
             .first()
         )
 
-    def get_all(self):
+    def get_all(self,limit):
         return(
              self.session.query(AQIResultModel)
              .order_by(AQIResultModel.id.desc())
+             .limit(limit)
              .all()
         )

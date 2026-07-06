@@ -29,12 +29,23 @@ class DatabaseManager:
             valid=packet.valid,
             timestamp=packet.timestamp
         )
-
         return self.repositiory.save(data)
-        return data
+        
     
     def get_latest_packet(self):
         return self.repositiory.get_latest()
+    
+    def get_all_packets(self,limit):
+        return self.repositiory.get_latest(limit)
+    
+    def get_nodes(self):
+        return self.repositiory.get_nodes()
+    
+    def get_latest_node(self,node):
+        return self.repositiory.get_latest_by_node(node)
+    
+    def get_history_by_node(self,node, limit):
+        return self.repositiory.get_history_by_node(node,limit)
     
     def close(self):
         self.session.close()

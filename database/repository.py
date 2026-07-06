@@ -14,3 +14,35 @@ class EnvironmentalRepository:
         return(
             self.session.query(Packet).order_by(Packet.id.desc()).first()
         )
+    
+    def get_all(self,limit):
+        return(
+            self.session.query(Packet)
+            .order_by(Packet.id.desc())
+            .limit(limit)
+            .all()
+        )
+    
+    def get_nodes(self):
+        return(
+            self.session.query(Packet.node)
+            .distinct()
+            .all()
+        )
+    
+    def get_latest_by_node(self,node):
+        return(
+            self.session.query(Packet)
+            .filter(Packet.node==node)
+            .order_by(Packet.id.desc())
+            .first()
+        )
+    
+    def get_history_by_node(self,node,limit):
+        return{
+            self.session.query(Packet)
+            .filter(Packet.node==node)
+            .order_by(Packet.id.desc())
+            .limit(limit)
+            .all()
+        }
