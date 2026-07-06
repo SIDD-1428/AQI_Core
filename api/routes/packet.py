@@ -1,15 +1,21 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from api.services.packet_service import PacketService
-router=APIRouter()
+from api.schemas.packet import PacketResponse
+from typing import List
 
-@router.get("/packet/latest")
+router=APIRouter(tags=["Packet"])
+
+@router.get("/packet/latest",response_model=PacketResponse)
 def latest_packet():
     service=PacketService()
 
     try:
         packet=service.get_latest_packet()
         if packet is None:
-            return{"message":"No Packet available"}
+            raise HTTPException(
+                status_code=404,
+                detail="No packet data available"
+            )
         
         return{
             "node":packet.node,
@@ -33,7 +39,7 @@ def latest_packet():
     finally:
         service.close()
 
-@router.get("/packet/history")
+@router.get("/packet/history",response_model=List[PacketResponse])
 
 def packet_history(limit: int=50):
     service=PacketService()

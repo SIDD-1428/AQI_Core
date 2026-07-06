@@ -1,9 +1,11 @@
-from fastapi import APIRouter
+from fastapi import APIRouter,HTTPException
 from api.services.aqi_service import AQIService
+from api.schemas.aqi import AQIResponse
+from typing import List
 
-router=APIRouter()
+router=APIRouter(tags=["AQI"])
 
-@router.get("/aqi/latest")
+@router.get("/aqi/latest",response_model=AQIResponse)
 def latest_aqi():
     service=AQIService()
 
@@ -11,7 +13,10 @@ def latest_aqi():
         result=service.get_latest_aqi()
 
         if result is None:
-            return {"message":"No AQI data available"}
+            raise HTTPException(
+                status_code=404,
+                detail="No AQI data available"
+            )
         return{
             "aqi":result.aqi,
             "category":result.category,
@@ -31,7 +36,7 @@ def latest_aqi():
         service.close()
 
 
-@router.get("/aqi/history")
+@router.get("/aqi/history",response_model=List[AQIResponse])
 def aqi_history(limit: int=50):
     service=AQIService()
 

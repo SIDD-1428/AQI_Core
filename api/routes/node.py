@@ -1,8 +1,12 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from api.services.packet_service import PacketService
-router=APIRouter()
+from api.schemas.node import NodeListResponse
+from api.schemas.packet import PacketResponse
+from typing import List
 
-@router.get("/node/list")
+router=APIRouter(tags=["Node"])
+
+@router.get("/node/list",response_model=NodeListResponse)
 def node_list():
     service=PacketService()
     try:
@@ -14,14 +18,17 @@ def node_list():
         service.close()
 
 
-@router.get("/node/{node_id}/latest")
+@router.get("/node/{node_id}/latest",response_model=PacketResponse)
 def latest_node(node_id:str):
     service=PacketService()
 
     try:
         packet=service.get_latest_node(node_id)
         if packet is None:
-            return {"message":"Node not found"}
+            raise HTTPException(
+                status_code=404,
+                detail=f"Node '{node_id}' not found"
+            )
         
         return{
             "node":packet.node,
@@ -44,12 +51,17 @@ def latest_node(node_id:str):
     finally:
         service.close()
 
-@router.get("/node/{node_id}/history")
+@router.get("/node/{node_id}/history",response_model=List[PacketResponse])
 def node_history(node_id:str, limit: int=50):
     service=PacketService()
 
     try:
         packets=service.get_history_by_node(node_id,limit)
+        if not packets:
+            raise HTTPException(
+                status_code=404,
+                detail=f"No history found for node '{node_id}'"
+            )
         history=[]
         for packet in packets:
             history.append({
