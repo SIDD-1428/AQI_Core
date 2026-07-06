@@ -6,6 +6,8 @@ class AQIResultRepository:
     def save(self,result):
         self.session.add(result)
         self.session.commit()
+        self.session.refersh(result)
+        return result
     
     def latest(self):
         return(

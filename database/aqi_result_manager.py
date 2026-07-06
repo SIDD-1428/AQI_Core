@@ -5,7 +5,7 @@ class AQIResultManager:
         self.repository=AQIResultRepository(session)
     
     def save_result(self,result):
-        self.repository.save(result)
+        return self.repository.save(result)
     
     def get_latest_result(self):
         return self.repository.latest()

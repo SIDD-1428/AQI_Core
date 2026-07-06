@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from api.routes.aqi import router as aqi_router
+from api.routes.health import router as health_router
 
 app=FastAPI(
     title="AQI Core API",
@@ -6,16 +8,6 @@ app=FastAPI(
     description="Backend API for AQI Core"
 )
 
-@app.get("/")
-def root():
-    return{
-        "message":"Welcome to AQI Core API"
-    }
-
-@app.get("/health")
-def health():
-    return{
-    "status":"online",
-    "service":"AQI Core API",
-    "version":"1.0.0"
-    }
+#Register routes
+app.include_router(health_router)
+app.include_router(aqi_router)

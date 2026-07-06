@@ -5,6 +5,7 @@ from sqlalchemy import DateTime
 from sqlalchemy import ForeignKey
 
 from sqlalchemy.orm import relationship
+from database.models import Packet
 from datetime import datetime
 from database.engine import Base
 
@@ -29,4 +30,4 @@ class AQIResultModel(Base):
         DateTime,
         default=datetime.utcnow
     )
-    packet = relationship("Packet")
+    packet = relationship(Packet)
