@@ -5,7 +5,7 @@ from database.repository import EnvironmentalRepository
 class DatabaseManager:
     def __init__(self):
         self.session=SessionLocal()
-        self.repositiory=EnvironmentalRepository(self.session)
+        self.repository=EnvironmentalRepository(self.session)
 
     def save_packet(self,packet):
         data=Packet(
@@ -29,23 +29,23 @@ class DatabaseManager:
             valid=packet.valid,
             timestamp=packet.timestamp
         )
-        return self.repositiory.save(data)
+        return self.repository.save(data)
         
     
     def get_latest_packet(self):
-        return self.repositiory.get_latest()
+        return self.repository.get_latest()
     
     def get_all_packets(self,limit):
-        return self.repositiory.get_latest(limit)
+        return self.repository.get_latest(limit)
     
     def get_nodes(self):
-        return self.repositiory.get_nodes()
+        return self.repository.get_nodes()
     
     def get_latest_node(self,node):
-        return self.repositiory.get_latest_by_node(node)
+        return self.repository.get_latest_node(node)
     
-    def get_history_by_node(self,node, limit):
-        return self.repositiory.get_history_by_node(node,limit)
+    def get_history_by_node(self,node_id, limit):
+        return self.repository.get_history_by_node(node_id,limit)
     
     def close(self):
         self.session.close()

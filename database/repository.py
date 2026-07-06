@@ -30,7 +30,7 @@ class EnvironmentalRepository:
             .all()
         )
     
-    def get_latest_by_node(self,node):
+    def get_latest_node(self,node):
         return(
             self.session.query(Packet)
             .filter(Packet.node==node)
@@ -38,11 +38,11 @@ class EnvironmentalRepository:
             .first()
         )
     
-    def get_history_by_node(self,node,limit):
-        return{
+    def get_history_by_node(self,node_id,limit):
+        return(
             self.session.query(Packet)
-            .filter(Packet.node==node)
+            .filter(Packet.node==node_id)
             .order_by(Packet.id.desc())
             .limit(limit)
             .all()
-        }
+        )
