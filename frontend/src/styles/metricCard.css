@@ -1,0 +1,26 @@
+.metric-card {
+  background: rgba(16,41,35,.45);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  padding: 20px;
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.metric-title {
+  color: #8DA8A0;
+  font-size: 13px;
+}
+
+.metric-value {
+  font-size: 34px;
+  font-weight: 700;
+  color: #F4FBF8;
+}
+
+.metric-unit {
+  color: #8DA8A0;
+  font-size: 13px;
+}

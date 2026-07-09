@@ -1,0 +1,27 @@
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.section-heading{
+    margin:0;
+    font-family:"Poppins",sans-serif;
+    font-size:18px;
+    font-weight:600;
+    color:#F4FBF8;
+}
+
+.section-subtitle{
+    margin-top:4px;
+    font-size:13px;
+    color:#8DA8A0;
+    font-family:"Inter",sans-serif;
+}
+
+.section-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}

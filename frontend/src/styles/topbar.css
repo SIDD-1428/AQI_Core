@@ -1,0 +1,123 @@
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  padding: 0 32px;
+
+  background: rgba(7, 27, 30, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.topbar-title {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: #f4fbf8;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ---------- Node selector ---------- */
+
+.node-selector {
+  position: relative;
+}
+
+.node-selector-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f4fbf8;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.node-selector-icon {
+  color: #5dcaa5;
+}
+
+.node-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 220px;
+  padding: 6px;
+  border-radius: 12px;
+
+  background: rgba(10, 38, 32, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.node-dropdown-item {
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: #f4fbf8;
+  cursor: pointer;
+}
+
+.node-dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.node-dropdown-item-active {
+  color: #5dcaa5;
+}
+
+/* ---------- Time ---------- */
+
+.topbar-time {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  color: #a9c4bc;
+}
+
+/* ---------- Theme toggle ---------- */
+
+.theme-toggle-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: #a9c4bc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ---------- Profile avatar ---------- */
+
+.profile-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #5dcaa5, #0f6e56);
+  color: #03100d;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+}

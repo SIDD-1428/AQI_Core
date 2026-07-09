@@ -11,6 +11,6 @@ class AQISubindices(BaseModel):
 
 class AQIResponse(BaseModel):
     aqi:int
-    category:int
+    category:str
     dominant_pollutant:str
     subindices:AQISubindices

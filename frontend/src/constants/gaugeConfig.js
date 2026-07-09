@@ -1,0 +1,10 @@
+export const GAUGE={
+    SIZE:230,
+    CENTER:125,
+    RADIUS:105,
+    STROKE_WIDTH:20,
+    START_ANGLE:135,
+    END_ANGLE:405,
+    MIN_VALUE:0,
+    MAX_VALUE:500,
+};

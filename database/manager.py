@@ -36,7 +36,7 @@ class DatabaseManager:
         return self.repository.get_latest()
     
     def get_all_packets(self,limit):
-        return self.repository.get_latest(limit)
+        return self.repository.get_all(limit)
     
     def get_nodes(self):
         return self.repository.get_nodes()

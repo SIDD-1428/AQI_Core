@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 class PacketResponse(BaseModel):
     node:str
-    sequence:str
+    sequence:int
     temperature:float
     humidity:float
     pressure:float
@@ -14,6 +14,6 @@ class PacketResponse(BaseModel):
     co:float
     nh3:float
     so2:float
-    rssi:float
+    rssi:int
     snr:float
     timestamp:int

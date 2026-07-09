@@ -4,5 +4,5 @@ class SystemStatusResponse(BaseModel):
     status:str
     database:str
     version:str
-    packets:str
+    packets:int
     aqi_records:int
