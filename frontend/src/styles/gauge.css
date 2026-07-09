@@ -1,6 +1,6 @@
 .gauge{
-    width:200px;
-    height:180px;
+    width:300px;
+    height:300px;
     position:relative;
     display:flex;
     justify-content:center;
@@ -34,20 +34,15 @@
 }
 
 .gauge-value-text{
-    font-size:38px;
-    font-family:"JetBrains Mono",monospace;
+    font-family:"JetBrains Mono", monospace;
+    font-size:92px;
     font-weight:700;
     fill:#F4FBF8;
+    letter-spacing:-3px;
 }
 
 .gauge-label-text{
-    font-size:13px;
+    font-size:19px;
     fill:#8DA8A0;
-    font-family:"Inter",sans-serif;
-}
-
-.gauge-category-text{
-    font-size:14px;
-    font-weight:600;
     font-family:"Inter",sans-serif;
 }

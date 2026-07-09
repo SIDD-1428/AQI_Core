@@ -1,8 +1,8 @@
 export const GAUGE={
-    SIZE:230,
-    CENTER:125,
-    RADIUS:105,
-    STROKE_WIDTH:20,
+    SIZE:300,
+    CENTER:150,
+    RADIUS:130,
+    STROKE_WIDTH:24,
     START_ANGLE:135,
     END_ANGLE:405,
     MIN_VALUE:0,

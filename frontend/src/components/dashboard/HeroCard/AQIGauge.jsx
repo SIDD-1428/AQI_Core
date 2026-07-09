@@ -2,9 +2,9 @@ import "../../../styles/gauge.css";
 import { GAUGE } from "../../../constants/gaugeConfig";
 import { AQI_RANGES } from "../../../constants/aqiRanges";
 import GaugeArc from "./GaugeArc";
-import GaugeSegment from "./GaugeSegment";
 import GaugeCenter from "./GaugeCenter";
-import GaugeNeedle from "./GaugeNeedle";
+import GaugePointer from "./GaugePointer";
+import GaugeGradient from "./GaugeGradient";
 
 function AQIGauge({ value }) {
   const totalAngle = GAUGE.END_ANGLE - GAUGE.START_ANGLE;
@@ -19,28 +19,9 @@ function AQIGauge({ value }) {
         <GaugeArc />
 
         {/* AQI Range Segments */}
-        {AQI_RANGES.map((range) => {
-
-          const startAngle = GAUGE.START_ANGLE +
-            (range.min / GAUGE.MAX_VALUE) *
-            totalAngle;
-
-          const endAngle = GAUGE.START_ANGLE +
-            (range.max / GAUGE.MAX_VALUE) *
-            totalAngle;
-
-          return (
-            <GaugeSegment
-              key={range.label}
-              startAngle={startAngle}
-              endAngle={endAngle}
-              color={range.color}
-            />
-          );
-
-        })}
+        <GaugeGradient/>
         {/*pointer*/}
-        <GaugeNeedle value={value}/>
+        <GaugePointer value={value}/>
         {/* Center Text */}
         <GaugeCenter value={value}/>
       </svg>

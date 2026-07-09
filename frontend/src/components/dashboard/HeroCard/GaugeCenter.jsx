@@ -1,35 +1,26 @@
-import {getAqiCategory} from "../../../utils/aqiCategory";
+import { GAUGE } from "../../../constants/gaugeConfig";
 
-function GaugeCenter({value}){
-    const category=getAqiCategory(value);
-    return(
-        <g>
-            <text
-            x="120"
-            y="125"
-            textAnchor="middle"
-            className="gauge-value-text">
-                {Math.round(value)}
-            </text>
+function GaugeCenter({ value }) {
+  return (
+    <g>
 
-            <text 
-            x="120"
-            y="140"
-            textAnchor="middle"
-            className="gauge-label-text">
-            AQI
-            </text>
-
-            <text 
-            x="120"
-            y="158"
-            textAnchor="middle"
-            fill={category.color}
-            className="gauge-category-text">
-                {category.label}
-            </text>
-        </g>
-    );
+      <text
+        x={GAUGE.CENTER}
+        y={GAUGE.CENTER + 19}
+        textAnchor="middle"
+        className="gauge-value-text"
+      >
+        {Math.round(value)}
+      </text>
+      <text className="gauge-label-text"
+       x={GAUGE.CENTER}
+        y={GAUGE.CENTER + 45}
+        textAnchor="middle">
+        AQI Index
+      </text>
+    
+    </g>
+  );
 }
 
 export default GaugeCenter;
