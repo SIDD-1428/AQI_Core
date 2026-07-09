@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-
+from datetime import datetime
 class AQISubindices(BaseModel):
     PM2_5:int
     PM10:int
@@ -13,4 +13,6 @@ class AQIResponse(BaseModel):
     aqi:int
     category:str
     dominant_pollutant:str
+    created_at:datetime
     subindices:AQISubindices
+    

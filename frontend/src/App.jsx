@@ -3,7 +3,7 @@ import { useState } from "react";
 import Sidebar from "./components/layout/Sidebar";
 import Topbar from "./components/layout/Topbar";
 import HeroCard from "./components/dashboard/HeroCard/HeroCard";
-
+import TrendChart from "./components/dashboard/TrendChart/TrendChart";
 import { MOCK_NODES } from "./data/mockNodes";
 import { MOCK_AQI_LATEST } from "./data/mockAqi";
 
@@ -53,7 +53,7 @@ function App() {
           />
 
           <MetricGrid/>
-
+          <TrendChart/>
         </main>
 
       </div>
