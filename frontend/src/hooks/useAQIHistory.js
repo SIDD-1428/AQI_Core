@@ -18,6 +18,7 @@ function useAQIHistory(){
             }
         }
         loadHistory();
+    
     },[]);
 
     return{

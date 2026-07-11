@@ -7,7 +7,7 @@ function TrendHeader(){
                 </h2>
 
                 <p className="trend-subtitle">
-                    Last 24 Hours
+                    Live Graph
                 </p>
             </div>
         </div>

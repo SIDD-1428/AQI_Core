@@ -6,6 +6,8 @@ import AQIGauge from "./AQIGauge";
 
 import { getAqiCategory } from "../../../utils/aqiCategory";
 import useRelativeTime from "../../../hooks/useRelativeTime";
+import { getSystemStatus } from "../../../api/aqiApi";
+import useSystemStatus from "../../../hooks/useSystemStatus";
 
 function HeroCard({
   aqi,
@@ -14,7 +16,7 @@ function HeroCard({
 }) {
 
   const category = getAqiCategory(aqi);
-
+  const {status}=useSystemStatus();
   const relativeTime = useRelativeTime(updatedAt);
 
   return (
@@ -51,6 +53,7 @@ function HeroCard({
           <HeroMeta
             dominantPollutant={dominantPollutant}
             relativeTime={relativeTime}
+            systemStatus={status?.status}
           />
 
         </div>

@@ -1,6 +1,7 @@
 function HeroMeta({
   dominantPollutant,
   relativeTime,
+  systemStatus,
 }) {
   return (
     <div className="hero-meta-row">
@@ -33,10 +34,13 @@ function HeroMeta({
         <div
           className="hero-meta-value"
           style={{
-            color: "#43D17C",
+            color:
+              systemStatus === "online"
+                ? "#43D17C"
+                : "#FF5C5C",
           }}
         >
-          ● LIVE
+          ● {systemStatus?.toUpperCase()||"UNKNOWN"}
         </div>
       </div>
 

@@ -1,50 +1,40 @@
 import { useEffect, useState } from "react";
-import { getLatestPacket } from "../api/aqiApi";
+import { getLatestAQI } from "../api/aqiApi";
 
-function useLatestPacket() {
-
-    const [packet, setPacket] = useState(null);
+function useLatestAQI() {
+    const [aqiData, setAqiData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
 
-        async function loadPacket() {
-
+        async function loadAQI() {
             try {
-
-                const data = await getLatestPacket();
-
-                setPacket(data);
+                const data = await getLatestAQI();
+                setAqiData(data);
                 setError(null);
-
             } catch (err) {
-
                 setError(err);
-
             } finally {
-
                 setLoading(false);
-
             }
-
         }
 
         // Initial fetch
-        loadPacket();
+        loadAQI();
 
-        const interval = setInterval(loadPacket, 5000);
+        //5 seconds
+        const interval = setInterval(loadAQI, 5000);
 
         return () => clearInterval(interval);
 
     }, []);
 
     return {
-        packet,
+        aqiData,
         loading,
         error,
     };
-
 }
 
-export default useLatestPacket;
+export default useLatestAQI;

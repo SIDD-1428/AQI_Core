@@ -11,10 +11,12 @@ function MetricCard({
   status,
   color,
   icon,
+  index,
 }) {
 
   return (
-    <div className="metric-card">
+    <div className="metric-card"
+    style={{animationDelay: `${index*120}ms`,}}>
       <MetricHeader
         title={title}
         icon={icon}

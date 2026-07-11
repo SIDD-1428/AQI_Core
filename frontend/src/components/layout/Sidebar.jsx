@@ -7,6 +7,7 @@ import "../../styles/sidebar.css"
 function Sidebar({
   activePage,
   onSelectPage,
+  liveMonitoringExpanded,
 }){
   const [expanded,setExpanded]=useState(false);
   return(

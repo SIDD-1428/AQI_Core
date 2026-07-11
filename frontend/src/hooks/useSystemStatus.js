@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import { getLatestPacket } from "../api/aqiApi";
+import { getSystemStatus } from "../api/aqiApi";
 
-function useLatestPacket() {
+function useSystemStatus() {
 
-    const [packet, setPacket] = useState(null);
+    const [status, setStatus] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
 
-        async function loadPacket() {
+        async function loadStatus() {
 
             try {
 
-                const data = await getLatestPacket();
+                const data = await getSystemStatus();
 
-                setPacket(data);
+                setStatus(data);
                 setError(null);
 
             } catch (err) {
@@ -30,21 +30,20 @@ function useLatestPacket() {
 
         }
 
-        // Initial fetch
-        loadPacket();
+        loadStatus();
 
-        const interval = setInterval(loadPacket, 5000);
+        const interval = setInterval(loadStatus, 5000);
 
         return () => clearInterval(interval);
 
     }, []);
 
     return {
-        packet,
+        status,
         loading,
         error,
     };
 
 }
 
-export default useLatestPacket;
+export default useSystemStatus;
