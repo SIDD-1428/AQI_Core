@@ -1,12 +1,11 @@
 import MetricCard from  "./MetricCard";
-import useLatestPacket from "../../../hooks/useLatestPacket";
-
 import "../../../styles/metricGrid.css";
+import { useDashboard } from "../../../context/DashboardContext";
 
 function MetricGrid(){
 const{
     packet,loading,error,
-}=useLatestPacket();
+}=useDashboard();
 
 if(loading){
     return(

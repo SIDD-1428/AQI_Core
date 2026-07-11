@@ -1,49 +1,40 @@
 import { useEffect, useState } from "react";
-import { getSystemStatus } from "../api/aqiApi";
+import { getLatestAQI } from "../../api/aqiApi";
 
-function useSystemStatus() {
-
-    const [status, setStatus] = useState(null);
+function useLatestAQI() {
+    const [aqiData, setAqiData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
 
-        async function loadStatus() {
-
+        async function loadAQI() {
             try {
-
-                const data = await getSystemStatus();
-
-                setStatus(data);
+                const data = await getLatestAQI();
+                setAqiData(data);
                 setError(null);
-
             } catch (err) {
-
                 setError(err);
-
             } finally {
-
                 setLoading(false);
-
             }
-
         }
 
-        loadStatus();
+        // Initial fetch
+        loadAQI();
 
-        const interval = setInterval(loadStatus, 5000);
+        //5 seconds
+        const interval = setInterval(loadAQI, 5000);
 
         return () => clearInterval(interval);
 
     }, []);
 
     return {
-        status,
+        aqiData,
         loading,
         error,
     };
-
 }
 
-export default useSystemStatus;
+export default useLatestAQI;

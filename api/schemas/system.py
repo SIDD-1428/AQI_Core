@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 class SystemStatusResponse(BaseModel):
     status:str
@@ -6,3 +7,7 @@ class SystemStatusResponse(BaseModel):
     version:str
     packets:int
     aqi_records:int
+    last_packet:datetime|None
+    last_aqi:datetime|None
+    node_count:int
+    uptime:str

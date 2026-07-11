@@ -1,0 +1,211 @@
+.status-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+    margin-bottom:28px;
+}
+
+.status-card{
+    background:rgba(16,41,35,.45);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+
+    padding:24px;
+
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+
+    transition:.25s;
+}
+
+.status-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(67,209,124,.35);
+}
+
+.status-icon{
+    display:flex;
+    align-items:center;
+}
+
+.status-title{
+    font-size:13px;
+    font-family:"Inter",sans-serif;
+    color:#8DA8A0;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+}
+
+.status-value{
+    font-size:28px;
+    font-weight:700;
+    font-family:"JetBrains Mono",monospace;
+}
+
+.system-info-card{
+    margin-top:28px;
+    padding:28px;
+
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,.08);
+
+    background:rgba(16,41,35,.45);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+}
+
+.system-section-title{
+    font-size:22px;
+    font-weight:600;
+    color:#F4FBF8;
+    margin-bottom:24px;
+}
+
+.system-info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:22px;
+}
+
+.info-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:18px 20px;
+
+    border-radius:14px;
+    background:rgba(255,255,255,.03);
+}
+
+.info-label{
+    color:#8DA8A0;
+    font-size:14px;
+    font-family:"Inter",sans-serif;
+}
+
+.info-value{
+    color:#F4FBF8;
+    font-size:18px;
+    font-family:"JetBrains Mono",monospace;
+    font-weight:600;
+}
+
+.health-summary-card{
+    margin-top:28px;
+    padding:28px;
+    border-radius:20px;
+    background:rgba(16,41,35,.45);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(20px);
+}
+
+.health-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.health-score{
+    font-size:32px;
+    font-weight:700;
+    color:#43D17C;
+    font-family:"JetBrains Mono",monospace;
+}
+
+.health-bar{
+    width:100%;
+    height:12px;
+    border-radius:999px;
+    overflow:hidden;
+    background:rgba(255,255,255,.08);
+}
+
+.health-fill{
+    height:100%;
+    border-radius:999px;
+    background:linear-gradient(
+        90deg,
+        #43D17C,
+        #FFD84A
+    );
+    transition:width .6s ease;
+}
+
+.health-message{
+    margin-top:16px;
+    color:#A6C3BC;
+    font-size:15px;
+    line-height:1.6;
+}
+
+.timeline-card{
+    margin-top:28px;
+    padding:28px;
+
+    border-radius:20px;
+
+    background:rgba(16,41,35,.45);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(20px);
+}
+
+.timeline{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.timeline-item{
+    display:flex;
+    gap:18px;
+    align-items:flex-start;
+    padding:16px;
+    border-radius:14px;
+    background:rgba(255,255,255,.03);
+    transition:.25s;
+}
+
+.timeline-item:hover{
+    background:rgba(255,255,255,.05);
+}
+
+.timeline-icon{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:rgba(255,255,255,.05);
+}
+
+.timeline-content{
+    flex:1;
+}
+
+.timeline-title{
+    color:#F4FBF8;
+    font-size:16px;
+    font-weight:600;
+    margin-bottom:4px;
+}
+
+.timeline-message{
+    color:#9AB4AC;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.timeline-time{
+    margin-top:6px;
+    font-size:12px;
+    color:#8A94A6;
+}

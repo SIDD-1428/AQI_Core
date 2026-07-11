@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getLatestPacket } from "../api/aqiApi";
+import { getLatestPacket } from "../../api/aqiApi";
 
 function useLatestPacket() {
 

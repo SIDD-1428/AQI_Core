@@ -6,11 +6,13 @@ import HeroCard from "./components/dashboard/HeroCard/HeroCard";
 import TrendChart from "./components/dashboard/TrendChart/TrendChart";
 import { MOCK_NODES } from "./data/mockNodes";
 import LiveMonitoring from "./components/dashboard/LiveMonitoring/LiveMonitoring";
-import useLatestAQI from "./hooks/useLatestAQI";
 import "./styles/global.css";
 import MetricGrid from "./components/dashboard/MetricGrid/MetricGrid";
+import SystemStatus from"./pages/SystemStatus";
+import { useDashboard } from "./context/DashboardContext";
 
 function App() {
+  
   // Currently active page
   const [activePage, setActivePage] = useState("dashboard");
 
@@ -22,14 +24,10 @@ function App() {
   //state sharing by livemonitoring
   const [liveMonitoringExpanded,setLiveMonitoringExpanded]=useState(false);
 
-  //live data pull
-  const{aqiData,loading,error}=useLatestAQI();
-  if(loading){
-    return <div>Loading...</div>
-  }
-  if(error){
-    return <div>Failed to load AQI.</div>
-  }
+  //dashboardprovider
+  const{
+    aqi,system,loading,error,}=useDashboard();
+  
   function toggleTheme() {
     setTheme((currentTheme) =>
       currentTheme === "dark" ? "light" : "dark"
@@ -54,6 +52,7 @@ function App() {
   }
 
 }
+console.log("Current Page: ",activePage)
   return (
     <div className="app-shell">
 
@@ -74,18 +73,29 @@ function App() {
 
         <main className="page-content">
 
-          <HeroCard
-              aqi={aqiData.aqi}
-              dominantPollutant={aqiData.dominant_pollutant}
-              updatedAt={Date.now()}
-          />
-          <LiveMonitoring
-          expanded={liveMonitoringExpanded}
-          onToggle={handleLiveMonitoringToggle}
-          />
-          <TrendChart/>
-        </main>
+            {(activePage === "dashboard"|| activePage==="live") && (
+              <>
+                <HeroCard
+                  aqi={aqi?.aqi}
+                  dominantPollutant={aqi?.dominant_pollutant}
+                  updatedAt={Date.now()}
+                />
 
+                <LiveMonitoring
+                  expanded={liveMonitoringExpanded}
+                  onToggle={handleLiveMonitoringToggle}
+                />
+
+                <TrendChart />
+              </>
+            )}
+
+
+            {activePage === "system-status" && (
+              <SystemStatus />
+            )}
+
+          </main>
       </div>
 
     </div>

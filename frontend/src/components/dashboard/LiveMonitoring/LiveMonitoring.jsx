@@ -1,18 +1,15 @@
 import { useState } from "react";
-
 import PollutantGrid from "./PollutantGrid";
 import ExpandButton from "./ExpandButton";
-
-import useLatestPacket from "../../../hooks/useLatestPacket";
-
 import "../../../styles/monitoring.css";
+import { useDashboard } from "../../../context/DashboardContext";
 
 function LiveMonitoring({
     expanded,
     onToggle,
 }) {
 
-    const { packet, loading, error } = useLatestPacket();
+    const { packet, loading, error } = useDashboard();
 
 
     if (loading) {

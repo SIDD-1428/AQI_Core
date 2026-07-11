@@ -3,6 +3,8 @@ from sqlalchemy import Integer
 from sqlalchemy import Float
 from sqlalchemy import String
 from sqlalchemy import Boolean
+from sqlalchemy import DateTime
+from datetime import datetime
 
 from database.engine import Base
 
@@ -31,3 +33,4 @@ class Packet(Base):
     checksum=Column(Integer)
     valid=Column(Boolean)
     timestamp=Column(Integer)
+    received_at=Column(DateTime,default=datetime.utcnow)

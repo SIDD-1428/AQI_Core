@@ -1,3 +1,7 @@
+import os
+print("Database path:")
+print(os.path.abspath("aqi_core.db"))
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base
 from sqlalchemy.orm import sessionmaker
