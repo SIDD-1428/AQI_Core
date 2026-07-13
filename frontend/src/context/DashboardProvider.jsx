@@ -6,6 +6,7 @@ import {
     getSystemStatus,
     getLatestAQI,
     getLatestPacket,
+    getNodeSummary,
 } from "../api/aqiApi";
 
 function DashboardProvider({ children }) {
@@ -13,7 +14,7 @@ function DashboardProvider({ children }) {
     const [system, setSystem] = useState(null);
     const [aqi, setAQI] = useState(null);
     const[packet,setPacket]=useState(null);
-
+    const[nodes,setNodes]=useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -23,17 +24,18 @@ function DashboardProvider({ children }) {
                 systemData,
                 aqiData,
                 packetData,
+                nodeData
             ] = await Promise.all([
                 getSystemStatus(),
                 getLatestAQI(),
                 getLatestPacket(),
-
+                getNodeSummary(),
             ]);
 
             setSystem(systemData);
             setAQI(aqiData);
             setPacket(packetData);
-
+            setNodes(nodeData.nodes);
             setError(null);
 
         } catch (err) {
@@ -65,6 +67,7 @@ function DashboardProvider({ children }) {
                 system,
                 aqi,
                 packet,
+                nodes,
                 loading,
                 error,
             }}

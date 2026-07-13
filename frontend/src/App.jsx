@@ -10,7 +10,7 @@ import "./styles/global.css";
 import MetricGrid from "./components/dashboard/MetricGrid/MetricGrid";
 import SystemStatus from"./pages/SystemStatus";
 import { useDashboard } from "./context/DashboardContext";
-
+import Nodes from "./pages/Nodes";
 function App() {
   
   // Currently active page
@@ -93,6 +93,10 @@ console.log("Current Page: ",activePage)
 
             {activePage === "system-status" && (
               <SystemStatus />
+            )}
+
+            {activePage==="nodes"&&(
+              <Nodes/>
             )}
 
           </main>

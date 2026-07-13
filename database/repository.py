@@ -46,3 +46,17 @@ class EnvironmentalRepository:
             .limit(limit)
             .all()
         )
+    
+    def get_node_summary(self):
+        nodes=self.get_nodes()
+        summary=[]
+        for node in nodes:
+            latest=(self.session.query(Packet)
+                    .filter(Packet.node==node[0])
+                    .order_by(Packet.id.desc())
+                    .first()
+                    )
+            
+            if latest:
+                summary.append(latest)
+        return summary

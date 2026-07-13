@@ -23,3 +23,11 @@ class AQIResultRepository:
              .limit(limit)
              .all()
         )
+    
+    def get_latest_by_node(self,node):
+        return(
+            self.session.query(AQIResultModel)
+            .filter(AQIResultModel.node==node)
+            .order_by(AQIResultModel.id.desc())
+            .first()
+        )

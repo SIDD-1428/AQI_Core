@@ -33,3 +33,7 @@ export function getSystemStatus() {
 export function getAQIHistory() {
   return request("/aqi/history");
 }
+
+export function getNodeSummary(){
+  return request("/node/list");
+}

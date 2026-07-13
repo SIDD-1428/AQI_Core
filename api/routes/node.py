@@ -1,18 +1,18 @@
+from datetime import datetime, timezone
 from fastapi import APIRouter, HTTPException
 from api.services.packet_service import PacketService
 from api.schemas.node import NodeListResponse
 from api.schemas.packet import PacketResponse
 from typing import List
-
+from database.aqi_result_manager import AQIResultManager
 router=APIRouter(tags=["Node"])
 
 @router.get("/node/list",response_model=NodeListResponse)
 def node_list():
     service=PacketService()
     try:
-        nodes=service.get_nodes()
         return{
-            "nodes":[node[0] for node in nodes]
+            "nodes":service.get_node_summary()
         }
     finally:
         service.close()

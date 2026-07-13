@@ -12,3 +12,6 @@ class AQIResultManager:
     
     def get_all_results(self, limit):
         return self.repository.get_all(limit)
+    
+    def get_latest_by_node(self,node):
+        return self.repository.get_latest_by_node(node)

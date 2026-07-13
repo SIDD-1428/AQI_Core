@@ -44,6 +44,9 @@ class DatabaseManager:
     def get_latest_node(self,node):
         return self.repository.get_latest_node(node)
     
+    def get_node_summary(self):
+        return self.repository.get_node_summary()
+    
     def get_history_by_node(self,node_id, limit):
         return self.repository.get_history_by_node(node_id,limit)
     
