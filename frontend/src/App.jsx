@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import Sidebar from "./components/layout/Sidebar";
-import Topbar from "./components/layout/Topbar";
+import Topbar from "./components/layout/TopBar";
 import HeroCard from "./components/dashboard/HeroCard/HeroCard";
 import TrendChart from "./components/dashboard/TrendChart/TrendChart";
 import { MOCK_NODES } from "./data/mockNodes";

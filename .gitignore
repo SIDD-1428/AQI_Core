@@ -1,0 +1,26 @@
+#Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+#Virtual environment
+venv/.env
+
+
+#Database
+aqi_core.db
+*.db
+
+#Logs
+*.log
+
+#Frontend
+frontend/node_modules/
+frontend/dist/
+
+#VS Code
+.vscode/
+
+#OS
+.DS_Store
+Thumbs.db

@@ -1,4 +1,4 @@
 #serial communication
-SERIAL_PORT="COM3"
+SERIAL_PORT="/dev/ttyUSB0"
 BAUD_RATE=115200
 SERIAL_TIMEOUT=1
