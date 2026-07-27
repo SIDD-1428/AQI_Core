@@ -14,7 +14,7 @@ class PostProcessingReport:
     def add(self,stage:str,status:str,message: str):
         self.entries.append(
             ReportEntry(
-                stage=stage
+                stage=stage,
                 status=status,
                 message=message
             )
