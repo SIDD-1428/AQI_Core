@@ -1,36 +1,64 @@
 from dataclasses import dataclass, field
+
 from typing import Any
-from datetime import datetime
+
+from .buffer import ObservationBuffer
+
 
 @dataclass
 class ObservationWindow:
-    timestamp:datetime
-    value:float
-    packet:Any
-    signal:str
-    reason:str
-    window_size: int = 10
-    packets: list[Any]=field(default_factory=list)
-    completed: bool=False
 
-    def add_packet(self,packet:Any):
+    signal: str
+
+    reason: str
+
+    window_size: int = 10
+
+    buffer: ObservationBuffer = field(init=False)
+
+    completed: bool = False
+
+
+    def __post_init__(self) -> None:
+
+        self.buffer = ObservationBuffer(
+            max_size=self.window_size
+        )
+
+
+    def add_packet(self, packet: Any) -> None:
+
         if self.completed:
             return
-        self.packets.append(packet)
 
-        if len(self.packets)>= self.window_size:
-            self.completed=True
+        self.buffer.add(packet)
+
+        if self.buffer.is_full():
+            self.completed = True
 
 
-    def is_complete(self)->bool:
+    def is_complete(self) -> bool:
+
         return self.completed
 
-    def collected(self)->int:
-        return len(self.packets)
 
-    def remaining(self)->int:
-        return max(0,self.window_size-len(self.packets))
+    def collected(self) -> int:
 
-    def clear(self):
-        self.packets.clear()
-        self.completed=False
+        return self.buffer.size()
+
+
+    def remaining(self) -> int:
+
+        return self.buffer.remaining()
+
+
+    def get_packets(self) -> list[Any]:
+
+        return self.buffer.values()
+
+
+    def clear(self) -> None:
+
+        self.buffer.clear()
+
+        self.completed = False

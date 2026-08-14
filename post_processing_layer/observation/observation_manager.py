@@ -2,7 +2,9 @@ from typing import Any
 from .observation_window import ObservationWindow
 
 class ObservationManager:
-    """Manages active and completed observation windows. It starts observations, feeds incoming packets, and trscks completed observations"""
+    """Manages active and completed observation windows.
+It starts observations, feeds incoming packets, and tracks completed observations.
+"""
     def __init__(self):
         self._active_windows:dict[str,ObservationWindow]={}
         self._completed_windows: list[ObservationWindow]=[]
