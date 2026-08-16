@@ -6,17 +6,21 @@ from .detectors.anomaly_detector import AnomalyDetector
 from .observation.observation_manager import ObservationManager
 from .observation.observation_processor import ObservationProcessor
 from .filters.filtered_packet_builder import FilteredPacketBuilder
+from .validators.aqi_validator import AQIValidator
+from aqi.engine import AQIEngine
+
 
 class PostProcessingEngine:
 
     """Coordinates anomaly detection, observation and filtering."""
 
-    def __init__(self):
+    def __init__(self, aqi_engine:AQIEngine):
 
         self._anomaly_detector = AnomalyDetector()
         self._observation_manager = ObservationManager()
         self._observation_processor = ObservationProcessor()
         self._filtered_packet_builder = FilteredPacketBuilder()
+        self._aqi_validator = AQIValidator (aqi_engine)
 
     def process(
         self,
@@ -52,13 +56,15 @@ class PostProcessingEngine:
         if not anomalies:
             context.accepted = True
             context.filtered_packet = packet
-            context.current_stage = "ACCEPTED"
+            context.final_result_available = True
+            context.current_stage="ACCEPTED"
 
             return context
 
         # 4. Start observations for detected anomalies
         context.anomaly_detected = True
         context.observation_required = True
+        context.final_result_available=False
 
         for result in anomalies:
             if result.signal is None:
@@ -66,7 +72,8 @@ class PostProcessingEngine:
 
             self._observation_manager.start_observation(
                 signal=result.signal,
-                reason=result.reason
+                reason=result.reason,
+                trigger_packet=packet
             )
 
             # The packet that triggered the anomaly
@@ -93,9 +100,9 @@ class PostProcessingEngine:
 
 
     def _process_completed_observations(
-        self,
-        context: PostProcessingContext
-    ) -> None:
+    self,
+    context: PostProcessingContext
+) -> None:
 
         completed_windows = (
             self._observation_manager
@@ -116,9 +123,6 @@ class PostProcessingEngine:
             if not packets:
                 continue
 
-            # The latest packet in the completed
-            # observation window is the packet that
-            # completed the observation.
             latest_observation_packet = packets[-1]
 
             original_value = getattr(
@@ -156,20 +160,45 @@ class PostProcessingEngine:
 
             context.filter_applied = True
 
-        # Build a completely separate filtered packet.
         if filtered_signals:
+
+            trigger_packet = None
+
+            for window in completed_windows:
+
+                if window.trigger_packet is not None:
+                    trigger_packet = window.trigger_packet
+                    break
+
+            base_packet = (
+                trigger_packet
+                if trigger_packet is not None
+                else context.packet
+            )
+
+            context.result_packet = base_packet
 
             context.filtered_packet = (
                 self._filtered_packet_builder.build(
-                    packet=context.packet,
+                    packet=base_packet,
                     filtered_signals=filtered_signals
                 )
             )
+
+            post_processed_aqi = (
+                self._aqi_validator.validate(
+                    packet=context.filtered_packet,
+                    context=context
+                )
+            )
+
+            context.report = post_processed_aqi
+            context.final_result_available = True
 
             context.metadata[
                 "filtered_signals"
             ] = filtered_signals
 
-            context.current_stage = "FILTERED"
+            context.current_stage = "AQI_VALIDATED"
 
         self._observation_manager.clear_completed()

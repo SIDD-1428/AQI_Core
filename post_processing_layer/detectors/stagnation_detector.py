@@ -1,8 +1,6 @@
 from post_processing_layer.context import PostProcessingContext
-
 from .detector import Detector
 from .detection_result import DetectionResult
-
 from ..config.detector_config import (
     STAGNATION_LIMITS,
     STAGNATION_TOLERANCE,
@@ -10,7 +8,6 @@ from ..config.detector_config import (
 
 
 class StagnationDetector(Detector):
-
     """Detects signals that remain effectively unchanged for too long."""
 
     def detect(
@@ -34,7 +31,6 @@ class StagnationDetector(Detector):
             )
 
         for signal, limit in STAGNATION_LIMITS.items():
-
             current_value = getattr(
                 packet,
                 signal,
@@ -43,7 +39,6 @@ class StagnationDetector(Detector):
 
             if current_value is None:
                 continue
-
             values = history.get_signal_history(
                 signal,
                 count=limit
@@ -53,15 +48,11 @@ class StagnationDetector(Detector):
                 continue
 
             reference_value = values[0]
-
             stagnant = True
-
             for value in values[1:]:
-
                 difference = abs(
                     value - reference_value
                 )
-
                 if difference > STAGNATION_TOLERANCE:
                     stagnant = False
                     break

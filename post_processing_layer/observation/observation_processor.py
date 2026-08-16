@@ -1,8 +1,8 @@
 from typing import Any
 
 from .observation_window import ObservationWindow
-from ..filtering.filter_manager import FilterManager
-from ..filtering.filter_result import FilterResult
+from ..filters.filter_manager import FilterManager
+from ..filters.filter_result import FilterResult
 
 
 class ObservationProcessor:

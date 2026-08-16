@@ -13,7 +13,8 @@ It starts observations, feeds incoming packets, and tracks completed observation
             self,
             signal:str,
             reason:str,
-            window_size:int=7
+            window_size:int=7,
+            trigger_packet:Any | None = None
     )->None:
 
         if signal in self._active_windows:
@@ -22,7 +23,8 @@ It starts observations, feeds incoming packets, and tracks completed observation
         self._active_windows[signal]=ObservationWindow(
             signal=signal,
             reason=reason,
-            window_size=window_size
+            window_size=window_size,
+            trigger_packet=trigger_packet
         )
 
 

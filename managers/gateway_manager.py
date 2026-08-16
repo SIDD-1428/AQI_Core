@@ -1,13 +1,15 @@
 from communication.serial_listener import SerialListener
 from parser.packet_processor import PacketProcessor
 from database.manager import DatabaseManager
-
+from typing import Any
 from database.engine import SessionLocal
 from configuration.breakpoint_manager import BreakpointManager
 from configuration.standard_manager import StandardManager
 from aqi.engine import AQIEngine
 from database.aqi_result_models import AQIResultModel
 from database.aqi_result_manager import AQIResultManager
+from post_processing_layer.post_processing_engine import PostProcessingEngine
+from post_processing_layer.history.history_manager import HistoryManager
 
 class GatewayManager:
     def __init__(self):
@@ -22,29 +24,102 @@ class GatewayManager:
             self.breakpoint_manager,
             self.standard_manager
         )
+
+        self.post_processing_engine = PostProcessingEngine(
+            aqi_engine=self.aqi_engine
+        )
+
+        self.history_manager = HistoryManager()
+        self._saved_packet_ids: dict[ Any, int]={}
     
     def run(self):
         print("AQI Core Started")
         print("-----------------")
 
         while True:
-            raw_packet=self.listener.read_line()
-            if not raw_packet: 
+            raw_packet = self.listener.read_line()
+            if not raw_packet:
                 continue
             if not raw_packet.startswith("{"):
                 continue
 
-            packet=PacketProcessor.process(raw_packet)
-            aqi_result=self.aqi_engine.calculate(packet)
-            self.handle_packet(packet, aqi_result)
+            packet = PacketProcessor.process(raw_packet)
 
+            # Initial AQI calculation
+            initial_aqi_result = self.aqi_engine.calculate(packet)
+
+            # Post-processing
+            context = self.post_processing_engine.process(
+                packet=packet,
+                history=self.history_manager
+            )
+
+            # Always save the raw packet.
+            try:
+                saved_packet = self.database.save_packet(packet)
+
+                self._saved_packet_ids[
+                    packet.sequence
+                ] = saved_packet.id
+
+            except Exception as e:
+                print(f"Database Error while saving packet: {e}")
+                continue
+
+            # Add packet to history only AFTER post-processing.
+            self.history_manager.add_packet(packet)
+
+            # Save AQI only when a final result is available.
+            if context.final_result_available:
+
+                final_aqi_result = (
+                    context.report
+                    if context.report is not None
+                    else initial_aqi_result
+                )
+
+                result_packet = (
+                    context.result_packet
+                    if context.result_packet is not None
+                    else packet
+                )
+
+                result_packet_id = self._saved_packet_ids.get(
+                    result_packet.sequence
+                )
+
+                if result_packet_id is None:
+
+                    print(
+                        "Database Warning: Could not find "
+                        f"saved packet for sequence "
+                        f"{result_packet.sequence}"
+                    )
+
+                    continue
+
+                self.handle_packet(
+                    packet=result_packet,
+                    aqi_result=final_aqi_result,
+                    packet_id=result_packet_id
+                )
+
+            else:
+
+                print("--------------------------------")
+                print(
+                    f"Packet {packet.sequence} is under observation."
+                )
+                print(
+                    "Final AQI will be saved after "
+                    "observation is complete."
+                )
     
-    def handle_packet(self, packet, aqi_result):
+    def handle_packet(self, packet, aqi_result,packet_id):
         print("--------------------------------")        
         try:
-            saved_packet=self.database.save_packet(packet)
             aqi_record=AQIResultModel(
-                packet_id=saved_packet.id,
+                packet_id=packet_id,
                 node=packet.node,
 
                 aqi=aqi_result.aqi,
@@ -100,6 +175,8 @@ class GatewayManager:
 
         print("\nDATABASE")
         print("----------------------------------------")
-        print("✓ Packet saved successfully")
+        print(f"Packet ID       : {packet_id}")
+        print("✓ Final AQI result saved successfully")
+        print("✓ AQI result saved successfully")
 
         print("==================================================\n")

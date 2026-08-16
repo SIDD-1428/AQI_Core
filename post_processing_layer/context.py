@@ -39,3 +39,5 @@ class PostProcessingContext:
     metadata: dict = field(default_factory=dict)
 
     report: Any | None = None
+    result_packet: Any | None = None
+    final_result_available: bool = False
