@@ -41,6 +41,7 @@ class PostProcessingEngine:
 
         # 2. Process any observations that completed
         self._process_completed_observations(context)
+        observation_result_ready=context.final_result_available
 
         # 3 Detect new anomalies
         detection_results = self._anomaly_detector.detect(
@@ -54,6 +55,8 @@ class PostProcessingEngine:
         ]
 
         if not anomalies:
+            if observation_result_ready:
+                return context
             context.accepted = True
             context.filtered_packet = packet
             context.final_result_available = True
