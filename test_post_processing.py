@@ -58,19 +58,8 @@ def main():
     history_manager = HistoryManager()
 
     test_values = [
-        52,
-        53,
-        200,   # deliberate spike
-        54,
-        52,
-        53,
-        51,
-        52,
-        54,
-        53,
-        52,
-        53,
-    ]
+    52, 53, 200, 54, 52, 53, 51, 52, 54, 53,
+    52, 53, 53, 53, 53, 53, 53 ]
 
     print("\n")
     print("=" * 70)
