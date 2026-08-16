@@ -40,7 +40,7 @@ class PostProcessingEngine:
 
 
         # 2. Process any observations that completed
-        self._process_completed_observations(context)
+        completed_signals=(self._process_completed_observations(context))
         observation_result_ready=context.final_result_available
 
         # 3 Detect new anomalies
@@ -75,8 +75,11 @@ class PostProcessingEngine:
 
             # Do not start another observation for a signal
             # that is already being observed.
-            if self._observation_manager.is_observing(result.signal):
-                continue
+            if (
+                    self._observation_manager.is_observing(result.signal)
+                    or result.signal in completed_signals
+                ):
+                    continue
 
             self._observation_manager.start_observation(
                 signal=result.signal,
@@ -113,7 +116,7 @@ class PostProcessingEngine:
     def _process_completed_observations(
     self,
     context: PostProcessingContext
-) -> None:
+) -> set[str]:
 
         completed_windows = (
             self._observation_manager
@@ -121,7 +124,14 @@ class PostProcessingEngine:
         )
 
         if not completed_windows:
-            return
+            return set()
+
+        # Remember which signals completed before
+        # clearing the completed windows.
+        completed_signals = {
+            window.signal
+            for window in completed_windows
+        }
 
         context.current_stage = "FILTERING"
 
@@ -216,3 +226,5 @@ class PostProcessingEngine:
             context.current_stage = "AQI_VALIDATED"
 
         self._observation_manager.clear_completed()
+
+        return completed_signals
