@@ -70,26 +70,34 @@ class PostProcessingEngine:
             if result.signal is None:
                 continue
 
+            # Do not start another observation for a signal
+            # that is already being observed.
+            if self._observation_manager.is_observing(result.signal):
+                continue
+
             self._observation_manager.start_observation(
                 signal=result.signal,
                 reason=result.reason,
                 trigger_packet=packet
             )
 
-            # The packet that triggered the anomaly
-            # becomes observation #1.
             observation_window = (
-                self._observation_manager
-                .get_window(result.signal)
+                self._observation_manager.get_window(result.signal)
             )
 
             if observation_window is not None:
                 observation_window.add_packet(packet)
+
                 context.observation_packets_collected = (
                     observation_window.collected()
                 )
 
+                context.observation_window_size = (
+                    observation_window.window_size
+                )
+
             context.observation_started = True
+
             context.warnings.append(
                 f"Observation started for {result.signal}: "
                 f"{result.reason}"
@@ -194,6 +202,9 @@ class PostProcessingEngine:
 
             context.report = post_processed_aqi
             context.final_result_available = True
+            context.accepted = True
+            context.rejected = False
+            context.observation_complete = True
 
             context.metadata[
                 "filtered_signals"
