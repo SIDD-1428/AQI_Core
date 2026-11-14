@@ -17,8 +17,8 @@ class PacketNormalizer:
         "snr",
     )
 
-    def process(self,contex:ProcessingContext)-> ProcessingContext:
-        packet=context.packet
+    def process(self, context: ProcessingContext) -> ProcessingContext:
+        packet = context.packet
 
         if packet is None:
             return context
