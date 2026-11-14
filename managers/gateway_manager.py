@@ -58,6 +58,12 @@ class GatewayManager:
                 saved_packet = self.database.save_packet(packet)
                 packet_key = (packet.node, packet.sequence)
                 self._saved_packet_ids[packet_key] = saved_packet.id
+
+                # Observation windows are short; retain a bounded lookup so
+                # long-running gateway sessions do not grow this map forever.
+                while len(self._saved_packet_ids) > 256:
+                    oldest_key = next(iter(self._saved_packet_ids))
+                    self._saved_packet_ids.pop(oldest_key, None)
             except Exception as exc:
                 print(f"Database Error while saving packet: {exc}")
                 continue
