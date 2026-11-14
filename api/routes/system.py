@@ -1,15 +1,16 @@
-from fastapi import APIRouter
-from database.engine import SessionLocal
-from database.models import Packet
-from database.aqi_result_models import AQIResultModel
-from api.schemas.system import SystemStatusResponse
-
-from datetime import datetime, timezone,timedelta
+from datetime import datetime, timezone
 from zoneinfo import ZoneInfo
 
-router = APIRouter(tags=["System"])
+from fastapi import APIRouter
 
-SERVER_START_TIME = datetime.now()
+from api.schemas.system import SystemStatusResponse
+from database.aqi_result_models import AQIResultModel
+from database.engine import SessionLocal
+from database.models import Packet
+
+
+router = APIRouter(tags=["System"])
+SERVER_START_TIME = datetime.now(timezone.utc)
 
 
 @router.get("/system/status", response_model=SystemStatusResponse)
@@ -19,31 +20,44 @@ def system_status():
     try:
         packet_count = session.query(Packet).count()
         aqi_count = session.query(AQIResultModel).count()
+        node_count = session.query(Packet.node).distinct().count()
 
         latest_packet = (
             session.query(Packet)
             .order_by(Packet.received_at.desc())
             .first()
         )
-
         latest_aqi = (
             session.query(AQIResultModel)
             .order_by(AQIResultModel.created_at.desc())
             .first()
         )
 
-        # Convert UTC -> IST
-        last_aqi = None
-        if latest_aqi:
-            last_aqi = (
-                latest_aqi.created_at
-                .replace(tzinfo=timezone.utc)
-                .astimezone(ZoneInfo("Asia/Kolkata"))
+        now = datetime.now(timezone.utc)
+        status = "offline"
+        last_packet = None
+
+        if latest_packet is not None:
+            packet_time = latest_packet.received_at
+            if packet_time.tzinfo is None:
+                packet_time = packet_time.replace(tzinfo=timezone.utc)
+
+            age_seconds = (now - packet_time).total_seconds()
+            status = (
+                "online" if 0 <= age_seconds <= 15 else "offline"
+            )
+            last_packet = packet_time.astimezone(
+                ZoneInfo("Asia/Kolkata")
             )
 
-        # Uptime calculation
-        uptime = datetime.now() - SERVER_START_TIME
+        last_aqi = None
+        if latest_aqi is not None and latest_aqi.created_at is not None:
+            aqi_time = latest_aqi.created_at
+            if aqi_time.tzinfo is None:
+                aqi_time = aqi_time.replace(tzinfo=timezone.utc)
+            last_aqi = aqi_time.astimezone(ZoneInfo("Asia/Kolkata"))
 
+        uptime = now - SERVER_START_TIME
         days = uptime.days
         hours = uptime.seconds // 3600
         minutes = (uptime.seconds % 3600) // 60
@@ -55,34 +69,16 @@ def system_status():
         else:
             uptime_string = f"{minutes}m"
 
-        
-        #gateway status
-        status="offline"
-        if latest_packet:
-            now=datetime.now(timezone.utc)
-            packet_time=latest_packet.received_at.replace(tzinfo=timezone.utc)
-            seconds_since_last_packet=(now-packet_time).total_seconds()
-            if seconds_since_last_packet<=15:
-                status="online"
-
-        print("Now:", now)
-        print("Packet:", packet_time)
-        print("Seconds:", seconds_since_last_packet)
         return {
             "status": status,
             "database": "connected",
             "version": "1.0.0",
-
             "packets": packet_count,
             "aqi_records": aqi_count,
-
-            "last_packet": latest_packet.received_at.replace(tzinfo=timezone.utc).astimezone(ZoneInfo("Asia/Kolkata"))
-            if latest_packet else None,
+            "last_packet": last_packet,
             "last_aqi": last_aqi,
-
-            "node_count": 1,
+            "node_count": node_count,
             "uptime": uptime_string,
         }
-
     finally:
         session.close()
